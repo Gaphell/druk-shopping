@@ -1,70 +1,26 @@
 import React from 'react';
 import './directory.styles.scss';
 import MenuItem from '../menu-item/menu-item.component';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectDirectorySections } from '../../redux/directory/directory.selector.js'
 
-class Directory extends React.Component {
-    constructor() {
-        super();
 
-        this.state = {
-            category: [
-                {
-                    title: 'SCI-FI',
-                    imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
-                    id: 1,
-                    linkUrl: 'scifi'
-                },
-                {
-                    title: 'COMEDY',
-                    imageUrl: 'https://i.ibb.co/px2tCc3/jackets.png',
-                    id: 2,
-                    linkUrl: ''
-                },
-                {
-                    title: 'ACTION',
-                    imageUrl: 'https://i.ibb.co/0jqHpnp/sneakers.png',
-                    id: 3,
-                    linkUrl: ''
-                },
-                {
-                    title: 'THRILLER',
-                    imageUrl: 'https://i.ibb.co/GCCdy8t/womens.png',
-                    size: 'large',
-                    id: 4,
-                    linkUrl: ''
+const Directory = ({ sections }) => {
 
-                },
-                {
-                    title: 'EPIC',
-                    imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
-                    size: 'large',
-                    id: 5,
-                    linkUrl: ''
+    return (
+        <div className='directory-menu'>
+            {
+                sections && sections.map(({ id, ...otherSectionProps }) =>
+                    <MenuItem key={id} {...otherSectionProps} />
+                )
+            }
+        </div>
+    )
+};
 
-                },
-                {
-                    title: 'HISTORY',
-                    imageUrl: 'https://i.ibb.co/px2tCc3/jackets.png',
-                    size: 'large',
-                    id: 6,
-                    linkUrl: ''
+const mapStateToProps = createStructuredSelector({
+    sections: selectDirectorySections
+});
 
-                },
-            ]
-        }
-    }
-
-    render() {
-        return (
-            <div className='directory-menu'>
-                {
-                    this.state.category.map(({ id, ...otherSectionProps }) =>
-                        <MenuItem key={id} {...otherSectionProps} />
-                    )
-                }
-            </div>
-        )
-    }
-}
-
-export default Directory;
+export default connect(mapStateToProps)(Directory);
