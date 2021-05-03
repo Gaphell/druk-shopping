@@ -24,13 +24,7 @@ class ShopPage extends Component {
         const { updateCollections } = this.props;
         debugger
         const collectionRef = firestore.collection('collections');
-
-        // fetch('https://druk-clothing-db.firebaseio.com/collections')
-        //     .then(response => response.json()
-        //         .then(collections => { debugger
-        //             console.log({ collections });
-        //         }))
-
+        
         collectionRef.get().then(
             async snapshot => {
                 const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
@@ -38,11 +32,6 @@ class ShopPage extends Component {
                 this.setState({ isLoading: false });
             }
         );
-        // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-        //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-        //     updateCollections(collectionsMap);
-        //     this.setState({ isLoading: false });
-        // });
     }
 
     render() {
