@@ -7,6 +7,7 @@ import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/fireb
 import { connect } from 'react-redux';
 import { updateCollections } from '../../redux/shop/shop.actions.js';
 
+// Implementation of HOC
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
 const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
@@ -23,11 +24,25 @@ class ShopPage extends Component {
         const { updateCollections } = this.props;
         debugger
         const collectionRef = firestore.collection('collections');
-        this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-            const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-            updateCollections(collectionsMap);
-            this.setState({ isLoading: false });
-        });
+
+        // fetch('https://druk-clothing-db.firebaseio.com/collections')
+        //     .then(response => response.json()
+        //         .then(collections => { debugger
+        //             console.log({ collections });
+        //         }))
+
+        collectionRef.get().then(
+            async snapshot => {
+                const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+                updateCollections(collectionsMap);
+                this.setState({ isLoading: false });
+            }
+        );
+        // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+        //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+        //     updateCollections(collectionsMap);
+        //     this.setState({ isLoading: false });
+        // });
     }
 
     render() {
