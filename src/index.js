@@ -19,8 +19,25 @@ const cache = new InMemoryCache();
 
 const client = new ApolloClient({
   link: httpLink,
-  cache
+  cache  
 });
+
+client.query({
+  query: gql`
+    {
+      getCollectionsByTitle(title: "hats") {
+        id
+        title
+        items {
+          id
+          name
+          price
+          imageUrl
+        }
+      }
+    }
+  `
+}).then(res => console.log(res));
 
 
 ReactDOM.render(

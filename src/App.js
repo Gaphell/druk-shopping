@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { selectCurrentUser } from './redux/user/user.selector';
 import { createStructuredSelector } from 'reselect';
 import CheckoutPage from './pages/checkout/checkout.component';
-import {checkUserSession} from './redux/user/user.actions'
+import { checkUserSession } from './redux/user/user.actions';
 
 class App extends React.Component {
     // unsubscribeFromAuth = null
@@ -25,7 +25,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <>
                 <Header />
                 <Switch>
                     <Route exact path='/' component={HomePage} />
@@ -37,7 +37,7 @@ class App extends React.Component {
                             : (<SignInAndSignUpPage />)
                     } />
                 </Switch>
-            </div>
+            </>
         );
     }
 }
